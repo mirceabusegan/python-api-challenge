@@ -1,0 +1,45 @@
+# Set the API base URL
+url = "http://api.openweathermap.org/data/2.5/weather?" + weather_api_key
+
+# Define an empty list to fetch the weather data for each city
+city_data = []
+
+# Print to logger
+print("Beginning Data Retrieval     ")
+print("-----------------------------")
+
+# Create counters
+record_count = 1
+set_count = 1
+
+# Loop through all the cities in our list to fetch weather data
+for i, city in enumerate(cities):
+
+    # Group cities in sets of 50 for logging purposes
+    if (i % 50 == 0 and i >= 50):
+        set_count += 1
+        record_count = 0
+
+    # Create endpoint URL with each city
+    city_url = url + "&q" + city
+    
+    # Log the url, record, and set numbers
+    print("Processing Record %s of Set %s | %s" % (record_count, set_count, city))
+
+    # Add 1 to the record count
+    record_count += 1
+
+    # Run an API request for each of the cities
+    try:
+        # Parse the JSON and retrieve data
+#Mircea
+#        cities_df = pd.DataFrame({'City':cities})
+  #      print(cities_df.head())
+     
+#        url = 'http://api.openweathermap.org/data/2.5/weather?q=city&APPID=fd80fb29f3b6c7f602f82a7557aeff9d'
+#       city_url = f"{url}&{city}&appid={weather_api_key}"
+# Make the API request
+        response = requests.get(city_url)
+        response_json = response.json()
+        temperatu = response_json['main']['temp']
+        print("temperature is: ")
